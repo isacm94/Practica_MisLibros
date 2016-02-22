@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="hlc.daw2.isa.mislibros.VistaLibro"
+    android:layout_height="wrap_content">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tv_titulo_lib"
+        android:id="@+id/tv_titulo_lib"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_titulo"
+        android:layout_below="@+id/tv_titulo_lib"
+        android:inputType="none"
+        android:hint="@string/et_titulo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tv_autor_lib"
+        android:id="@+id/tv_autor_lib"
+        android:layout_below="@+id/et_titulo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_autor"
+        android:inputType="none"
+        android:layout_below="@+id/tv_autor_lib"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="@string/et_autor" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tv_editorial_lib"
+        android:id="@+id/tv_editorial_lib"
+        android:layout_below="@+id/et_autor"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_editorial"
+        android:inputType="none"
+        android:hint="@string/et_editorial"
+        android:layout_below="@+id/tv_editorial_lib" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tv_isbn_lib"
+        android:id="@+id/tv_isbn_lib"
+        android:layout_below="@+id/et_editorial"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_isbn"
+        android:hint="@string/et_isbn"
+        android:layout_alignTop="@+id/tv_isbn_lib"
+        android:layout_toRightOf="@+id/tv_paginas_lib"
+        android:layout_toEndOf="@+id/tv_paginas_lib"
+        android:inputType="number" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tv_paginas_lib"
+        android:id="@+id/tv_paginas_lib"
+        android:layout_below="@+id/et_isbn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/et_paginas"
+        android:layout_alignTop="@+id/tv_paginas_lib"
+        android:layout_alignLeft="@+id/et_isbn"
+        android:layout_alignStart="@+id/et_isbn"
+        android:hint="@string/et_paginas" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tv_anho_lib"
+        android:id="@+id/tv_anho_lib"
+        android:layout_alignTop="@+id/et_paginas"
+        android:layout_alignLeft="@+id/et_paginas"
+        android:layout_alignStart="@+id/et_paginas"
+        android:layout_marginLeft="119dp"
+        android:layout_marginStart="119dp" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/et_anho"
+        android:hint="@string/et_anho"
+        android:layout_alignTop="@+id/tv_anho_lib"
+        android:layout_toRightOf="@+id/tv_anho_lib"
+        android:layout_toEndOf="@+id/tv_anho_lib" />
+
+    <CheckBox
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:text="@string/cb_ebook"
+        android:id="@+id/cb_ebook"
+        android:layout_below="@+id/et_paginas"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/tv_anho_lib"
+        android:layout_alignRight="@+id/et_paginas"
+        android:layout_alignEnd="@+id/et_paginas"
+        android:layout_alignBottom="@+id/cb_leido" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cb_leido"
+        android:id="@+id/cb_leido"
+        android:layout_below="@+id/et_paginas"
+        android:layout_toRightOf="@+id/cb_ebook"
+        android:layout_toEndOf="@+id/cb_ebook" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rat_nota_lib"
+        android:layout_below="@+id/cb_ebook"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tv_resumen_lib"
+        android:id="@+id/tv_resumen_lib"
+        android:layout_below="@+id/rat_nota_lib"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/et_resumen"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/tv_resumen_lib"
+        android:layout_alignRight="@+id/et_anho"
+        android:layout_alignEnd="@+id/et_anho"
+        android:hint="@string/et_resumen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
+</ScrollView>

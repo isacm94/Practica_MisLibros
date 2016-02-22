@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">MisLibros</string>
+    <string name="action_settings">Settings</string>
+    <string name="imagen">imagen</string>
+
+    <string name="tv_titulo_lib">Título:</string>
+    <string name="et_titulo">Título del libro</string>
+
+    <string name="tv_autor_lib">Autor:</string>
+    <string name="et_autor">Autor del libro</string>
+    <string name="tv_editorial_lib">Editorial:</string>
+    <string name="et_editorial">Editorial del libro</string>
+    <string name="tv_isbn_lib">I.S.B.N:</string>
+    <string name="et_isbn">ISBN del libro</string>
+    <string name="tv_paginas_lib">Páginas:</string>
+    <string name="et_paginas">Páginas</string>
+    <string name="tv_anho_lib">Año:</string>
+    <string name="et_anho">Año</string>
+    <string name="cb_ebook">eBook</string>
+    <string name="cb_leido">Leído</string>
+    <string name="tv_resumen_lib">Resumen:</string>
+    <string name="tv_titulo">Título</string>
+    <string name="tv_autor">Autor</string>
+    <string name="et_resumen">Resumen del libro</string>
+
+</resources>
