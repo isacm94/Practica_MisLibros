@@ -112,7 +112,7 @@ public class LibrosDB {
     }
 
     public boolean updateLibro(long rowId, String titulo, String autor, String editorial, String isbn, Integer anio,
-                              Integer paginas, Integer ebook, Integer leido, String nota, String resumen) {
+                              Integer paginas, Integer ebook, Integer leido, Float nota, String resumen) {
         ContentValues campos = new ContentValues();
 
         campos.put(TITULO, titulo);
