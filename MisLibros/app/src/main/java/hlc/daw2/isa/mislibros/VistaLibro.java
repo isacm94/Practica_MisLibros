@@ -1,5 +1,7 @@
 package hlc.daw2.isa.mislibros;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ public class VistaLibro extends AppCompatActivity {
     private Cursor cursor;
     private LibrosDB DB = new LibrosDB(this);
     long ID;
+    boolean anhadir, editar, eliminar;
 
     EditText et_titulo;
     EditText et_autor;
@@ -28,6 +31,7 @@ public class VistaLibro extends AppCompatActivity {
     CheckBox cb_leido;
     RatingBar rat_nota;
     EditText et_resumen;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,30 +51,40 @@ public class VistaLibro extends AppCompatActivity {
 
         ID = getIntent().getLongExtra("id", 0);//Recogemos el id que nos llega
 
+        if (ID != 0) {           //Si es distinto de 0 es que no está añadiendo
 
-        try {
-            DB.openR();//Abre BD
-        } catch (SQLException e) {
-            e.printStackTrace();
+            anhadir = false;
+            editar = true;
+            eliminar = true;
+
+            try {
+                DB.openR();//Abre BD
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            cursor = DB.getUnLibro(ID);//Guardamos en el cursor el libro
+
+            //if(cursor.moveToFirst()) {
+            et_titulo.setText(cursor.getString(cursor.getColumnIndexOrThrow("titulo")));
+            et_autor.setText(cursor.getString(cursor.getColumnIndexOrThrow("autor")));
+            et_editorial.setText(cursor.getString(cursor.getColumnIndexOrThrow("editorial")));
+            et_isbn.setText(cursor.getString(cursor.getColumnIndexOrThrow("isbn")));
+            et_paginas.setText(cursor.getString(cursor.getColumnIndexOrThrow("paginas")));
+            et_anho.setText(cursor.getString(cursor.getColumnIndexOrThrow("anio")));
+            cb_ebook.setChecked(cursor.getInt(cursor.getColumnIndexOrThrow("ebook")) != 0);
+            cb_leido.setChecked(cursor.getInt(cursor.getColumnIndexOrThrow("leido")) != 0);
+            rat_nota.setRating(cursor.getFloat(cursor.getColumnIndexOrThrow("nota")));
+            et_resumen.setText(cursor.getString(cursor.getColumnIndexOrThrow("resumen")));
+
+            //}
+
+            DB.close();
+        } else {//Está añadiendo
+            anhadir = true;
+            editar = false;
+            eliminar = false;
         }
-
-        cursor = DB.getUnLibro(ID);//Guardamos en el cursor el libro
-
-        //if(cursor.moveToFirst()) {
-        et_titulo.setText(cursor.getString(cursor.getColumnIndexOrThrow("titulo")));
-        et_autor.setText(cursor.getString(cursor.getColumnIndexOrThrow("autor")));
-        et_editorial.setText(cursor.getString(cursor.getColumnIndexOrThrow("editorial")));
-        et_isbn.setText(cursor.getString(cursor.getColumnIndexOrThrow("isbn")));
-        et_paginas.setText(cursor.getString(cursor.getColumnIndexOrThrow("paginas")));
-        et_anho.setText(cursor.getString(cursor.getColumnIndexOrThrow("anio")));
-        cb_ebook.setChecked(cursor.getInt(cursor.getColumnIndexOrThrow("ebook")) != 0);
-        cb_leido.setChecked(cursor.getInt(cursor.getColumnIndexOrThrow("leido")) != 0);
-        rat_nota.setRating(cursor.getFloat(cursor.getColumnIndexOrThrow("nota")));
-        et_resumen.setText(cursor.getString(cursor.getColumnIndexOrThrow("resumen")));
-
-        //}
-
-        DB.close();
 
     }
 
@@ -85,18 +99,64 @@ public class VistaLibro extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit:
-                Toast.makeText(this, "Pulsado botón editar", Toast.LENGTH_SHORT).show();
                 Actualizar();
                 break;
-            case R.id.guardar:
-                Toast.makeText(this, "Pulsado botón guardar", Toast.LENGTH_SHORT).show();
+            case R.id.guardar: {
+                Insertar();
                 break;
-            case R.id.eliminar:
-                Toast.makeText(this, "Pulsado botón eliminar", Toast.LENGTH_SHORT).show();
+            }
+            case R.id.eliminar: {
+                MuestraAlertaEliminar("Eliminar libro", "¿Desea eliminar el libro " + et_titulo.getText().toString() + "?").show();
                 break;
-
+            }
         }
-        return true; /** true -> consumimos el item, no se propaga*/
+        return true;
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.guardar).setVisible(anhadir);
+        menu.findItem(R.id.eliminar).setVisible(eliminar);
+        menu.findItem(R.id.edit).setVisible(editar);
+        return true;
+    }
+
+    public void Eliminar() {
+        try {
+            DB.openW();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        DB.deleteLibro(ID);
+
+        DB.close();
+
+    }
+
+    private AlertDialog MuestraAlertaEliminar(String titulo, String mensaje) {
+        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+        alerta.setTitle(titulo);
+        alerta.setMessage(mensaje);
+
+        DialogInterface.OnClickListener listenerCancelar = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "Operación cancelada", Toast.LENGTH_SHORT).show();
+                dialog.cancel();
+            }
+        };
+
+        DialogInterface.OnClickListener listenerOK = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Eliminar();
+                Toast.makeText(getApplicationContext(), "Libro eliminado", Toast.LENGTH_SHORT).show();
+                finish();//Finaliza actividad para volver a la vista principal
+            }
+        };
+
+
+        alerta.setPositiveButton("Aceptar", listenerOK);
+        alerta.setNegativeButton("Cancelar", listenerCancelar);
+        return alerta.create();
     }
 
     public void Actualizar() {
@@ -105,12 +165,6 @@ public class VistaLibro extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        //String titulo, String autor, String editorial, String isbn, Integer anio,
-        //Integer paginas, Integer ebook, Integer leido, String nota, String resumen
-
-
-        //String tit  = et_titulo.getText().toString();
 
         DB.updateLibro(ID,
                 et_titulo.getText().toString(),
@@ -128,4 +182,43 @@ public class VistaLibro extends AppCompatActivity {
         Toast.makeText(this, "Libro actualizado correctamente", Toast.LENGTH_SHORT).show();
         DB.close();
     }
+
+    public void Insertar() {
+        if (CamposVacios()) {
+            Toast.makeText(this, "Error: existen campos vacíos", Toast.LENGTH_SHORT).show();
+        } else {
+            try {
+                DB.openW();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            DB.insertLibro(
+                    et_titulo.getText().toString(),
+                    et_autor.getText().toString(),
+                    et_editorial.getText().toString(),
+                    et_isbn.getText().toString(),
+                    Integer.parseInt(et_anho.getText().toString()),
+                    Integer.parseInt(et_paginas.getText().toString()),
+                    (cb_ebook.isChecked() ? 1 : 0),
+                    (cb_leido.isChecked() ? 1 : 0),
+                    rat_nota.getRating(),
+                    et_resumen.getText().toString());
+
+            DB.close();
+
+            Toast.makeText(this, "Libro " + et_titulo.getText().toString() + " añadido correctamente", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public boolean CamposVacios() {
+        if (et_titulo.getText().toString() == "" || et_autor.getText().toString() == "" || et_editorial.getText().toString() == ""
+                || et_isbn.getText().toString() == "" || et_anho.getText().toString() == "" || et_paginas.getText().toString() == "" ||
+                et_resumen.getText().toString() == "") {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 }

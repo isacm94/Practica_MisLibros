@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -28,13 +27,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton btn_MAS = (FloatingActionButton) findViewById(R.id.btn_MAS);
+        btn_MAS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                //Generar intencion
+                //Toast.makeText(getApplicationContext(), "Botón más pulsado", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), VistaLibro.class);
+                intent.putExtra("id", 0);
+                startActivity(intent);
             }
         });
 
@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ActualizaVista();
         lv_listaLibros.setOnItemClickListener(this);
 
+    }
+    protected void onResume(){
+        super.onResume();
+        ActualizaVista();
     }
 
     @Override
