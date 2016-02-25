@@ -40,8 +40,8 @@ public class LibrosDB {
             + AUTOR + " text, "
             + EDITORIAL + " text, "
             + ISBN + " text, "
-            + ANIO + " integer, "
-            + PAGINAS + " integer, "
+            + ANIO + " text, "
+            + PAGINAS + " text, "
             + EBOOK + " integer, "
             + LEIDO + " integer, "
             + NOTA + " float, "
@@ -87,8 +87,8 @@ public class LibrosDB {
     }
 
 
-    public long insertLibro(String titulo, String autor, String editorial, String isbn, Integer anio,
-                            Integer paginas, Integer ebook, Integer leido, Float nota, String resumen) {
+    public long insertLibro(String titulo, String autor, String editorial, String isbn, String anio,
+                            String paginas, Integer ebook, Integer leido, Float nota, String resumen) {
         ContentValues campos = new ContentValues();
 
         campos.put(TITULO, titulo);
@@ -111,8 +111,8 @@ public class LibrosDB {
         return this.myBD.delete(DATABASE_TABLE, ROW_ID + "=" + rowId, null) > 0; //$NON-NLS-1$
     }
 
-    public boolean updateLibro(long rowId, String titulo, String autor, String editorial, String isbn, Integer anio,
-                              Integer paginas, Integer ebook, Integer leido, Float nota, String resumen) {
+    public boolean updateLibro(long rowId, String titulo, String autor, String editorial, String isbn, String anio,
+                              String paginas, Integer ebook, Integer leido, Float nota, String resumen) {
         ContentValues campos = new ContentValues();
 
         campos.put(TITULO, titulo);

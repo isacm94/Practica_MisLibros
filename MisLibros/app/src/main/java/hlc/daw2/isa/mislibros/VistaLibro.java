@@ -122,15 +122,18 @@ public class VistaLibro extends AppCompatActivity {
 
     public void Eliminar() {
         try {
-            DB.openW();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                DB.openW();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            DB.deleteLibro(ID);
+
+            DB.close();
+        } catch (Exception e) {
+            Toast.makeText(this, "Se ha producido un error eliminando", Toast.LENGTH_SHORT).show();
         }
-
-        DB.deleteLibro(ID);
-
-        DB.close();
-
     }
 
     private AlertDialog MuestraAlertaEliminar(String titulo, String mensaje) {
@@ -161,52 +164,66 @@ public class VistaLibro extends AppCompatActivity {
 
     public void Actualizar() {
         try {
-            DB.openW();//Abre BD
-        } catch (SQLException e) {
-            e.printStackTrace();
+            if (et_titulo.getText().toString().matches("") || et_autor.getText().toString().matches("")) {
+                Toast.makeText(this, "Debe introducir un título y un autor", Toast.LENGTH_SHORT).show();
+            } else {
+                try {
+                    DB.openW();//Abre BD
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                DB.updateLibro(ID,
+                        et_titulo.getText().toString(),
+                        et_autor.getText().toString(),
+                        et_editorial.getText().toString(),
+                        et_isbn.getText().toString(),
+                        et_anho.getText().toString(),
+                        et_paginas.getText().toString(),
+                        (cb_ebook.isChecked() ? 1 : 0),
+                        (cb_leido.isChecked() ? 1 : 0),
+                        rat_nota.getRating(),
+                        et_resumen.getText().toString()
+                );
+
+                Toast.makeText(this, "Libro actualizado correctamente", Toast.LENGTH_SHORT).show();
+                DB.close();
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Se ha producido un error editando", Toast.LENGTH_SHORT).show();
         }
-
-        DB.updateLibro(ID,
-                et_titulo.getText().toString(),
-                et_autor.getText().toString(),
-                et_editorial.getText().toString(),
-                et_isbn.getText().toString(),
-                Integer.parseInt(et_anho.getText().toString()),
-                Integer.parseInt(et_paginas.getText().toString()),
-                (cb_ebook.isChecked() ? 1 : 0),
-                (cb_leido.isChecked() ? 1 : 0),
-                rat_nota.getRating(),
-                et_resumen.getText().toString()
-        );
-
-        Toast.makeText(this, "Libro actualizado correctamente", Toast.LENGTH_SHORT).show();
-        DB.close();
     }
 
     public void Insertar() {
-        if (CamposVacios()) {
-            Toast.makeText(this, "Error: existen campos vacíos", Toast.LENGTH_SHORT).show();
-        } else {
-            try {
-                DB.openW();
-            } catch (SQLException e) {
-                e.printStackTrace();
+        try {
+            if (et_titulo.getText().toString().matches("") || et_autor.getText().toString().matches("")) {
+                Toast.makeText(this, "Debe introducir un título y un autor", Toast.LENGTH_SHORT).show();
+            } else {
+                try {
+                    DB.openW();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                DB.insertLibro(
+                        et_titulo.getText().toString(),
+                        et_autor.getText().toString(),
+                        et_editorial.getText().toString(),
+                        et_isbn.getText().toString(),
+                        et_anho.getText().toString(),
+                        et_paginas.getText().toString(),
+                        (cb_ebook.isChecked() ? 1 : 0),
+                        (cb_leido.isChecked() ? 1 : 0),
+                        rat_nota.getRating(),
+                        et_resumen.getText().toString());
+
+                DB.close();
+
+                Toast.makeText(this, "Libro " + et_titulo.getText().toString() + " añadido correctamente", Toast.LENGTH_SHORT).show();
             }
-            DB.insertLibro(
-                    et_titulo.getText().toString(),
-                    et_autor.getText().toString(),
-                    et_editorial.getText().toString(),
-                    et_isbn.getText().toString(),
-                    Integer.parseInt(et_anho.getText().toString()),
-                    Integer.parseInt(et_paginas.getText().toString()),
-                    (cb_ebook.isChecked() ? 1 : 0),
-                    (cb_leido.isChecked() ? 1 : 0),
-                    rat_nota.getRating(),
-                    et_resumen.getText().toString());
-
-            DB.close();
-
-            Toast.makeText(this, "Libro " + et_titulo.getText().toString() + " añadido correctamente", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Se ha producido un error insertado", Toast.LENGTH_SHORT).show();
         }
     }
 
