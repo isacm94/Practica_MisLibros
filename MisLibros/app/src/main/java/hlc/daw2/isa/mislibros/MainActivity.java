@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -27,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //BOTÓN +
         FloatingActionButton btn_MAS = (FloatingActionButton) findViewById(R.id.btn_MAS);
         btn_MAS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,15 +40,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         DB = new LibrosDB(this);
         InsertaDatosIniciales();
         ActualizaVista();
-        lv_listaLibros.setOnItemClickListener(this);
+        lv_listaLibros.setOnItemClickListener(this);//Click en cada linea de la lista
 
     }
+
+    /**
+     * Actualiza la vista con los datos actuales de la base de datos
+     */
     protected void onResume(){
         super.onResume();
         ActualizaVista();
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -69,16 +72,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
+    /**
+     * Click en cada fila de la lista, le pasamos el ID del libro
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, VistaLibro.class);
         intent.putExtra("id", id);
         startActivity(intent);
-        //String item = ((TextView)view).getText().toString();
-        //Toast.makeText(getBaseContext(), item, Toast.LENGTH_LONG).show();
     }
+
+    /**
+     * Carga todos los libros guardados en la lista
+     */
     public void ActualizaVista() {
         lv_listaLibros = (ListView) findViewById(R.id.lv_listaLibros);
 
@@ -99,6 +107,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         DB.close();
     }
 
+    /**
+     * Añade a la base de datos todos los libros iniciales
+     */
     public void InsertaDatosIniciales() {
 
         try {

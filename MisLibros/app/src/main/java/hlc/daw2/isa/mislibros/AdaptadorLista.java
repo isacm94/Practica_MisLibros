@@ -37,9 +37,6 @@ public class AdaptadorLista extends CursorAdapter {
         RatingBar rating_nota = (RatingBar) view.findViewById(R.id.rating_nota);
         ImageView imagen = (ImageView) view.findViewById(R.id.imagen);
 
-        //tv_titulo.setFocusable(false);
-        //tv_titulo.setFocusableInTouchMode(true);
-
         //Extraemos los datos del cursor
         String titulo = cursor.getString(cursor.getColumnIndexOrThrow("titulo"));
         String autor = cursor.getString(cursor.getColumnIndexOrThrow("autor"));
@@ -47,11 +44,12 @@ public class AdaptadorLista extends CursorAdapter {
 
         //Log.d("AdaptadorLista","Nota: "+nota.toString());
 
-        //Guardamos en los elementos los datos guardados en el cursor
+        //Guardamos en los elementos, los datos guardados en el cursor
         tv_titulo.setText(titulo);
         tv_autor.setText(autor);
         rating_nota.setRating(nota);
 
+        //Establece una imagen por defecto
         switch((int)(Math.random()*3)) {
             case 0:
                 imagen.setImageResource(R.drawable.libro1);
