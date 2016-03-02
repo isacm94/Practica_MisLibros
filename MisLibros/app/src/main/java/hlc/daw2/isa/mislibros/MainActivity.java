@@ -52,28 +52,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ActualizaVista();
     }
 
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
-
     /**
      * Click en cada fila de la lista, le pasamos el ID del libro
      */
@@ -102,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             AdaptadorLista adaptador = new AdaptadorLista(this, cursor, 0);
 
             lv_listaLibros.setAdapter(adaptador);//Pasamos al listview los libros del cursor
+        }else{
+            lv_listaLibros.removeAllViewsInLayout();//Si no hay libros, borra sus información en el layout
         }
 
         DB.close();
